@@ -1,11 +1,14 @@
 const express = require('express')
-const app = express()
+var app = express()
 const port = 3001
 
 const bcrypt = require('bcryptjs');
 const { v4: uuidv4 } = require('uuid');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+
+
+var kayttajaRouter = require('./routes/kayttaja');
 
 const passport = require('passport');
 const BasicStrategy = require('passport-http').BasicStrategy;
@@ -15,11 +18,12 @@ const JwtStrategy = require('passport-jwt').Strategy,
 
 app.use(bodyParser.json());
 app.use(cors());
+app.use('/rekisteroidy', kayttajaRouter);
+
 
 //Uuden käyttäjän testailua varten ilman databasea
 const kayttajat = [
   {
-    idKayttaja: uuidv4(),
     Etunimi: "Testi",
     Sukunimi: "Kaali",
     Osoite: "Testikatu 1",
@@ -31,32 +35,6 @@ const kayttajat = [
   }
 ];
 
-//Uuden käyttäjän lisääminen
-app.post('/kayttaja', (req, res) => {
-  //console.log(req.body);
-
-  // luodaan hahsattu salasana
-  const salt = bcrypt.genSaltSync(6);
-  const passwordHash = bcrypt.hashSync(req.body.salasana, salt);
-  const uusiKayttaja = {
-    idKayttaja: uuidv4(),
-    Etunimi: req.body.Etunimi,
-    Sukunimi: req.body.Sukunimi,
-    Osoite: req.body.Osoite,
-    Paikkakunta: req.body.Paikkakunta,
-    Puhelinnumero: req.body.Puhelinnumero,
-    Ika: req.body.Ika,
-    kayttajatunnus: req.body.kayttajatunnus,
-    salasana: passwordHash
-  }
-
-  //koska käyttäjät on taulukossa eikä vielä db connectionia, pusketaan uusi sinne taulukkoon
-  kayttajat.push(uusiKayttaja);
-
-  //console.log(kayttajat);
-  //res.send("ok");
-  res.status(201).json({ status: "created" });
-})
 
 
 /*********************************************
