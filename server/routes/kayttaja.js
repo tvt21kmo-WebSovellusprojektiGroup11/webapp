@@ -10,28 +10,26 @@ router.post('/', (req, res) => {
     // luodaan hahsattu salasana
     const salt = bcrypt.genSaltSync(6);
     const passwordHash = bcrypt.hashSync(req.body.salasana, salt);
-    const uusiKayttaja = {
-        Etunimi: req.body.Etunimi,
-        Sukunimi: req.body.Sukunimi,
-        Osoite: req.body.Osoite,
-        Paikkakunta: req.body.Paikkakunta,
-        Puhelinnumero: req.body.Puhelinnumero,
-        Ika: req.body.Ika,
-        kayttajatunnus: req.body.kayttajatunnus,
-        salasana: passwordHash
-    }
-
-    var sqlKasky = 'INSERT INTO kayttaja ( Etunimi, Sukunimi, Osoite, Paikkakunta, Puhelinnumero, Ika, kayttajatunnus, salasana ) VALUES ?';
+    const uusiKayttaja = [
+        req.body.Etunimi,
+        req.body.Sukunimi,
+        req.body.Osoite,
+        req.body.Paikkakunta,
+        req.body.Puhelinnumero,
+        req.body.Ika,
+        req.body.kayttajatunnus,
+        passwordHash
+    ]
+    var sqlKasky = 'INSERT INTO kayttaja ( Etunimi, Sukunimi, Osoite, Paikkakunta, Puhelinnnumero, Ika, kayttajatunus, salasana ) VALUES ?';
     // luodaan yhteys tietokantaan operaatioita varten
     pool.getConnection(async function (err, connection) {
         // yhteys on asynkrooninen
-        if (err) throw err;
-
-        connection.promise().query(sqlKasky, uusiKayttaja, function (err) {
+        if (err) throw err
+        connection.promise().query(sqlKasky, [[uusiKayttaja]], function (err) {
             if (err) throw err;
-            res.status(201).json({ status: "created" });
-            connection.end();
-        })
+        }).then(
+            res.status(201).json({ status: "created" })
+        )
     })
 
     //console.log(kayttajat);
