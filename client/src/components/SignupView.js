@@ -27,7 +27,7 @@ export default function SignupView() {
 
     // Tietojen lähetys 
     try {
-      const result = await axios.post(Constants.API_ADDRESS + '/kayttaja', 
+      const result = await axios.post(Constants.API_ADDRESS + '/rekisteroidy', 
         {
           Etunimi: event.target.Etunimi.value,
           Sukunimi: event.target.Sukunimi.value,
