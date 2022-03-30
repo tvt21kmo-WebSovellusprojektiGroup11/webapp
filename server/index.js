@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 const { v4: uuidv4 } = require('uuid');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+const pool = require('./db_handler')();
 
 var kayttajaRouter = require('./routes/kayttaja');
 
@@ -21,52 +21,39 @@ app.use(cors());
 app.use('/rekisteroidy', kayttajaRouter);
 
 
-//Uuden käyttäjän testailua varten ilman databasea
-const kayttajat = [
-  {
-    Etunimi: "Testi",
-    Sukunimi: "Kaali",
-    Osoite: "Testikatu 1",
-    Paikkakunta: "Oulu",
-    Puhelinnumero: "045",
-    Ika: 66,
-    kayttajatunnus: 'demouser',
-    salasana: '$2y$06$PhZ74dT8/5g6B8SgssFq6ey4ojLxmP6pos2DcevMUGw25Vc9jGEou', // testerpassword
-  }
-];
-
 
 
 /*********************************************
  * HTTP Basic Authentication
    Route level middleware
 */
-passport.use(new BasicStrategy(
-  function (kayttajatunnus, salasana, done) {
-    //console.log('kayttajatunnus: ' + kayttajatunnus);
-    //console.log('salasana: ' + salasana);
+passport.use(
+  new BasicStrategy(async (kayttajatunnus, salasana, done) => {
 
-    // Katsotaan löytyykö täsmäävää käyttäjätunnusta 
-    // Tämä database queryksi, kuhan database käytössä
-    const kayttaja = kayttajat.find(u => u.kayttajatunnus === kayttajatunnus);
-
-    // Jos täsmäävä käyttäjätunnus, vertaillaan salasanoja
-    if (kayttaja != null) {
-      // if passwords match, then proceed to route handler (the protected resource)
-      if (bcrypt.compareSync(salasana, kayttaja.salasana)) {
-        done(null, kayttaja); // tässä välitetään user info, jota voi käyttää req:llä myöhemmin
-      } else {
-        // if passwords does not match, reject the request
-        done(null, false);
-      }
-    } else {
-      // if user is not found, reject the request
-      done(null, false);
-    }
-
-  }
-
-));
+      pool.query('SELECT * FROM kayttaja WHERE kayttajatunus=?', 
+      [ kayttajatunnus ], function (err, result){
+      //console.log(result);
+      if (err) throw err;
+        //console.log(result[0].kayttajatunus);
+        if (result.length > 0) {
+          if (result[0].kayttajatunus != undefined) {
+          // if passwords match, then proceed to route handler (the protected resource)
+            if (bcrypt.compareSync(salasana, result[0].salasana)) {
+              done(null, result[0]); 
+          }else {
+            // if passwords does not match, reject the request
+            done(null, false);
+          }
+        } else {
+            done(null, false);
+          }
+        } else {
+          // if user is not found, reject the request
+          done(null, false);
+        }
+    })
+  })
+);
 
 //http- basic auth testiä varten potected resource
 app.get('/my-protected-resource', passport.authenticate('basic', { session: false }), (req, res) => {
@@ -94,7 +81,7 @@ app.post('/login', passport.authenticate('basic', { session: false }), (req, res
       idKayttaja: req.user.idKayttaja,
       Etunimi: req.user.Etunimi,
       Sukunimi: req.user.Sukunimi,
-      Puhelinnumero: req.user.Puhelinnumero
+      Puhelinnumero: req.user.Puhelinnnumero
     }
   };
   const secretKey = jwtSecretKey;
