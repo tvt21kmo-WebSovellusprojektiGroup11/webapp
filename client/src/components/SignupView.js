@@ -77,7 +77,7 @@ export default function SignupView() {
 
 
   return (
-    <div>
+    <div className="homeBox">
       <h2>Luo uusi käyttäjä</h2>
       <form onSubmit= { handleSignupSubmit }>
         <div>

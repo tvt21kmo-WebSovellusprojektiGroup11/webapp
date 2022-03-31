@@ -2,12 +2,29 @@ import './App.css';
 import Home from './components/Home';
 import SignupView from './components/SignupView';
 import LoginView from './components/LoginView';
+import RestaurantListView from './components/RestaurantListView';
 import ProtectedTestView from './components/ProtectedTestView'
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useState } from 'react'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react'
+import Constants from './Constants.json';
+import axios from 'axios';
 
 function App() {
 
+  const [ ravintolat, setRavintolat] = useState([]);
+
+  //Haetaan ravintolat ja asetetaan ylää olevaan tilamuuttujaan
+  useEffect(() => {
+    const getData = async () => {
+      const results = await fetch(Constants.API_ADDRESS+ '/ravintola').then((res) => res.json());
+      
+      setRavintolat(results);
+      //console.log(results);
+    }
+    getData();
+  }, []);
+
+  
   //ladataan selaimen localstoragesta käyttäjän jwt, jos löytyy
   const jwtFromStorage = window.localStorage.getItem('userJWT');
 
@@ -27,24 +44,50 @@ function App() {
         
         }}/> } />
       <Route path="/signup" element={ <SignupView/> } />
+      <Route path="/ravintolat" element={ <RestaurantListView ravintolat= { ravintolat }/> }/>
   </>
+
+  
 
   // Jos login nii näkee protectedin. Tarkastetaan jwt:llä, jos ei null niin logged in
   if(userJwt != null) {
                                   //propsilla välitetään jwt protectediin, muuttamalla userjwt nulliksi kirjaudutaan ulos
-      authRoutes = <Route path="/protected" element={ <ProtectedTestView jwt= {userJwt} logout= {() => {
+      authRoutes = <>
+      <Route path="/protected" element={ <ProtectedTestView jwt= {userJwt} logout= {() => {
         setUserJwt(null)
         // tyhjennetään local storage, kun kirjaudutaan ulos
         window.localStorage.removeItem('userJWT');
       }}/> } />
+      <Route path="/ravintolat" element={ <RestaurantListView ravintolat= { ravintolat }/> }/>
+      </>
+  }
+
+  //navBarin renderöinti kirjautumistilan mukaan
+  let authLinks = <>
+    <Link to="/login">Kirjaudu sisään</Link>
+    <Link to="signup">Luo käyttäjä</Link>
+  </>
+  if(userJwt != null) {
+    authLinks = <>
+    <Link to="/protected">Suojattu tila</Link>
+            
+     </>   
   }
  
 
 
   return (
     <div>
-      <h1>Ruokatilaussovellus</h1>
-      <BrowserRouter>
+      <div className="banner">
+        <h1>Ruokatilaussovellus</h1>
+      </div>
+      <BrowserRouter> 
+      <div className="navbar">
+          <Link to="/"><div>Koti</div></Link>
+          <Link to="/ravintolat">Ravintolat</Link>
+          { authLinks }
+          
+        </div>
         <Routes>
           <Route path="/" element={ <Home userLoggedIn= { userJwt != null } logout= {() => {
               setUserJwt(null)
@@ -57,6 +100,7 @@ function App() {
               // tyhjennetään local storage, kun kirjaudutaan ulos
               window.localStorage.removeItem('userJWT');
           }}/>} />
+          
         </Routes>
       </BrowserRouter>
     </div>
