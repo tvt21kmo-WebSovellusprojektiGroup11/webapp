@@ -9,6 +9,7 @@ const cors = require('cors');
 const pool = require('./db_handler')();
 
 var kayttajaRouter = require('./routes/kayttaja');
+var ravintolaRouter = require('./routes/ravintola');
 
 const passport = require('passport');
 const BasicStrategy = require('passport-http').BasicStrategy;
@@ -19,7 +20,7 @@ const JwtStrategy = require('passport-jwt').Strategy,
 app.use(bodyParser.json());
 app.use(cors());
 app.use('/rekisteroidy', kayttajaRouter);
-
+app.use('/ravintola', ravintolaRouter);
 
 
 
