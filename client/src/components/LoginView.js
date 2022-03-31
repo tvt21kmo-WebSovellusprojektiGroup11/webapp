@@ -57,7 +57,7 @@ export default function LoginView(props) {
   
 
   return (
-    <div>
+    <div className="homeBox">
       <h2>Kirjaudu sisään</h2> 
       <form onSubmit={ handleLoginSubmit } >
         <div>

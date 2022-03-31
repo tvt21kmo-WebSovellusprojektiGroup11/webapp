@@ -31,7 +31,7 @@ export default function ProtectedTestView(props) {
 
 
   return (
-    <div>
+    <div className="homeBox">
         <h2>ProtectedTestView</h2>
         <div>
             Decoded jwt data payloadista: <br/>

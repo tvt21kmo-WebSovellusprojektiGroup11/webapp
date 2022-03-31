@@ -1,0 +1,31 @@
+.navbar {
+    display: flex;
+    background-color:lightgray;
+    margin-left: 20%;
+    margin-right: 20%;
+    
+  }
+  
+  .navbar > * {
+    margin-right: 10px;
+  }
+
+  .banner {
+      margin-left: 20%;
+      margin-right: 20%;
+      border: 1px solid;
+      background-color: lightblue;
+  }
+
+  .homeBox {
+    margin-left: 20%;
+    margin-right: 20%; 
+    margin-top: 20px;
+    background-color:lightgray;
+  }
+
+  .btnLogout {
+    margin-left: 90%;
+  }
+
+  

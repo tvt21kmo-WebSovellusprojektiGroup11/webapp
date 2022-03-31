@@ -3,7 +3,7 @@ import Home from './components/Home';
 import SignupView from './components/SignupView';
 import LoginView from './components/LoginView';
 import ProtectedTestView from './components/ProtectedTestView'
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { useState } from 'react'
 
 function App() {
@@ -38,13 +38,30 @@ function App() {
         window.localStorage.removeItem('userJWT');
       }}/> } />
   }
+
+  //navBarin renderöinti kirjautumistilan mukaan
+  let authLinks = <>
+    <Link to="/login">Kirjaudu sisään</Link>
+    <Link to="signup">Luo käyttäjä</Link>
+  </>
+  if(userJwt != null) {
+    authLinks = <Link to="/protected">Suojattu tila</Link>
+  }
  
 
 
   return (
     <div>
-      <h1>Ruokatilaussovellus</h1>
-      <BrowserRouter>
+      <div className="banner">
+        <h1>Ruokatilaussovellus</h1>
+      </div>
+      <BrowserRouter> 
+      <div className="navbar">
+          <Link to="/"><div>Koti</div></Link>
+          <Link to="/ravintola">Ravintolat</Link>
+          { authLinks }
+          
+        </div>
         <Routes>
           <Route path="/" element={ <Home userLoggedIn= { userJwt != null } logout= {() => {
               setUserJwt(null)
