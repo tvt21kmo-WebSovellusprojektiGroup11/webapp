@@ -1,7 +1,5 @@
 const pool = require('../db_handler')();
 const express = require('express');
-const Connection = require('mysql2/typings/mysql/lib/Connection');
-const { transformAuthInfo } = require('passport');
 var router = express.Router();
 
 router.post('/uusi', (req, res) => {
