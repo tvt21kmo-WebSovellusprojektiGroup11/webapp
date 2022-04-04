@@ -25,7 +25,7 @@ router.post('/uusi', (req, res) => {
 router.get('/', (req, res) => {
     pool.getConnection(async function (err, connection) {
         if (err) throw err;
-        connection.promise.query('SELECT * FROM Tuote', function (err) {
+        connection.promise().query('SELECT * FROM Tuote', function (err) {
             if (err) throw err;
         }).then(rivit => {
             res.send(rivit[0]);
