@@ -10,6 +10,7 @@ const pool = require('./db_handler')();
 
 var kayttajaRouter = require('./routes/kayttaja');
 var ravintolaRouter = require('./routes/ravintola');
+var tuoteRouter = require('./routes/tuote');
 
 const passport = require('passport');
 const BasicStrategy = require('passport-http').BasicStrategy;
@@ -21,6 +22,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use('/rekisteroidy', kayttajaRouter);
 app.use('/ravintola', ravintolaRouter);
+app.use('/tuote', tuoteRouter);
 
 
 
@@ -31,28 +33,28 @@ app.use('/ravintola', ravintolaRouter);
 passport.use(
   new BasicStrategy(async (kayttajatunnus, salasana, done) => {
 
-      pool.query('SELECT * FROM kayttaja WHERE kayttajatunus=?', 
-      [ kayttajatunnus ], function (err, result){
-      //console.log(result);
-      if (err) throw err;
+    pool.query('SELECT * FROM kayttaja WHERE kayttajatunus=?',
+      [kayttajatunnus], function (err, result) {
+        //console.log(result);
+        if (err) throw err;
         //console.log(result[0].kayttajatunus);
         if (result.length > 0) {
           if (result[0].kayttajatunus != undefined) {
-          // if passwords match, then proceed to route handler (the protected resource)
+            // if passwords match, then proceed to route handler (the protected resource)
             if (bcrypt.compareSync(salasana, result[0].salasana)) {
-              done(null, result[0]); 
-          }else {
-            // if passwords does not match, reject the request
-            done(null, false);
-          }
-        } else {
+              done(null, result[0]);
+            } else {
+              // if passwords does not match, reject the request
+              done(null, false);
+            }
+          } else {
             done(null, false);
           }
         } else {
           // if user is not found, reject the request
           done(null, false);
         }
-    })
+      })
   })
 );
 
