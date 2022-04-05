@@ -6,5 +6,6 @@ export default function RestautantItems (props) {
     <div><h3>{ props.Nimi }</h3></div>
     <img src={ props.kuva } />
     <div>Aukioloajat: {props.aukioloaika}</div>
+    <div>{ props.tyyppi }</div>
     </div>);   
 }
