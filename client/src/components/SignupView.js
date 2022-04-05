@@ -37,6 +37,7 @@ export default function SignupView() {
           Ika: event.target.Ika.value,
           kayttajatunnus: event.target.kayttajatunnus.value,
           salasana: event.target.salasana.value,
+          rooli: event.target.rooli.value,
         });
       console.log(result);
 
@@ -111,6 +112,13 @@ export default function SignupView() {
         <div>
           Salasana <br/>
           <input type="text" name="salasana"></input>
+        </div>
+        <div>
+        <label for="rooli">Valitse rooli</label> <br/>
+          <select id="rooli" name="rooli">
+            <option value="asiakas">asiakas</option>
+            <option value="omistaja">omistaja</option>
+          </select>
         </div>
         <div>
           { signupUIControls }

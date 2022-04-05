@@ -18,9 +18,10 @@ router.post('/', (req, res) => {
         req.body.Puhelinnumero,
         req.body.Ika,
         req.body.kayttajatunnus,
-        passwordHash
+        passwordHash,
+        req.body.rooli
     ]
-    var sqlKasky = 'INSERT INTO kayttaja ( Etunimi, Sukunimi, Osoite, Paikkakunta, Puhelinnnumero, Ika, kayttajatunus, salasana ) VALUES ?';
+    var sqlKasky = 'INSERT INTO kayttaja ( Etunimi, Sukunimi, Osoite, Paikkakunta, Puhelinnnumero, Ika, kayttajatunus, salasana, rooli ) VALUES ?';
     // luodaan yhteys tietokantaan operaatioita varten
     pool.getConnection(async function (err, connection) {
         // yhteys on asynkrooninen
