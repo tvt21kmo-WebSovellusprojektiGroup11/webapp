@@ -74,7 +74,7 @@ app.get('/my-protected-resource', passport.authenticate('basic', { session: fals
 let jwtSecretKey = require('./jwt-key.json').secret;
 
 app.post('/login', passport.authenticate('basic', { session: false }), (req, res) => {
-  //console.log(req);
+  //console.log(req.user);
   // generoidaan jwt
   //Luulin että pitäs olla 'req.kayttaja.idKayttaja', mutta ei toimiku userilla
   const payload = {
@@ -82,7 +82,8 @@ app.post('/login', passport.authenticate('basic', { session: false }), (req, res
       idKayttaja: req.user.idKayttaja,
       Etunimi: req.user.Etunimi,
       Sukunimi: req.user.Sukunimi,
-      Puhelinnumero: req.user.Puhelinnnumero
+      Puhelinnumero: req.user.Puhelinnnumero,
+      rooli: req.user.rooli,
     }
   };
   const secretKey = jwtSecretKey;
