@@ -12,7 +12,7 @@ router.post('/uusi', passport.authenticate('jwt', { session: false }), (req, res
         req.body.kuva,
     ]
     var sqlKasky = 'INSERT INTO Tuote ( Nimi, Kuvaus, Kategoria, Hinta, Kuva, Valmistaja ) VALUES ?';
-    var haeRavintola = 'SELECT idRavintola FROM RAVINTOLA WHERE Omistaja = ?'
+    var haeRavintola = 'SELECT idRavintola FROM Ravintola WHERE Omistaja = ?'
     pool.getConnection(async function (err, connection) {
         if (err) throw err;
         connection.promise().query(haeRavintola, [[req.user.kayttaja.idKayttaja]]).then(
