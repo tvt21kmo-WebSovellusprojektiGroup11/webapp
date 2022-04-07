@@ -29,17 +29,17 @@ app.use('/ravintola', ravintolaRouter);
    Route level middleware
 */
 passport.use(
-  new BasicStrategy(async (kayttajatunnus, salasana, done) => {
+  new BasicStrategy(async (Kayttajatunnus, Salasana, done) => {
 
-      pool.query('SELECT * FROM kayttaja WHERE kayttajatunus=?', 
-      [ kayttajatunnus ], function (err, result){
+      pool.query('SELECT * FROM Kayttaja WHERE Kayttajatunnus=?', 
+      [ Kayttajatunnus ], function (err, result){
       //console.log(result);
       if (err) throw err;
         //console.log(result[0].kayttajatunus);
         if (result.length > 0) {
-          if (result[0].kayttajatunus != undefined) {
+          if (result[0].Kayttajatunnus != undefined) {
           // if passwords match, then proceed to route handler (the protected resource)
-            if (bcrypt.compareSync(salasana, result[0].salasana)) {
+            if (bcrypt.compareSync(Salasana, result[0].Salasana)) {
               done(null, result[0]); 
           }else {
             // if passwords does not match, reject the request
@@ -78,12 +78,12 @@ app.post('/login', passport.authenticate('basic', { session: false }), (req, res
   // generoidaan jwt
   //Luulin että pitäs olla 'req.kayttaja.idKayttaja', mutta ei toimiku userilla
   const payload = {
-    kayttaja: {
+    Kayttaja: {
       idKayttaja: req.user.idKayttaja,
       Etunimi: req.user.Etunimi,
       Sukunimi: req.user.Sukunimi,
-      Puhelinnumero: req.user.Puhelinnnumero,
-      rooli: req.user.rooli,
+      Puhelinnumero: req.user.Puhelinnumero,
+      Rooli: req.user.Rooli,
     }
   };
   const secretKey = jwtSecretKey;
@@ -115,8 +115,8 @@ passport.use(new JwtStrategy(jwtOptions, function (jwt_payload, done) {
 //JWT suojattu testi-reitti
 app.get('/jwt-protected', passport.authenticate('jwt', { session: false }), (req, res) => {
   //console.log(req);
-  console.log('Käyttäjä ID jwt tokenista luettuna ' + req.user.kayttaja.idKayttaja);
-  res.send("OK " + req.user.kayttaja.Etunimi + " " + req.user.kayttaja.Sukunimi);
+  console.log('Käyttäjä ID jwt tokenista luettuna ' + req.user.Kayttaja.idKayttaja);
+  res.send("OK " + req.user.Kayttaja.Etunimi + " " + req.user.Kayttaja.Sukunimi);
 })
 
 

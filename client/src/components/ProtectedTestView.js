@@ -35,10 +35,10 @@ export default function ProtectedTestView(props) {
         <h2>ProtectedTestView</h2>
         <div>
             Decoded jwt data payloadista: <br/>
-            Käyttäjän id: {decodedToken.kayttaja.idKayttaja}<br/>
-            Etunimi: {decodedToken.kayttaja.Etunimi}<br/>
-            Sukunimi: {decodedToken.kayttaja.Sukunimi}<br/>
-            P-numero: {decodedToken.kayttaja.Puhelinnumero}<br/>
+            Käyttäjän id: {decodedToken.Kayttaja.idKayttaja}<br/>
+            Etunimi: {decodedToken.Kayttaja.Etunimi}<br/>
+            Sukunimi: {decodedToken.Kayttaja.Sukunimi}<br/>
+            P-numero: {decodedToken.Kayttaja.Puhelinnumero}<br/>
             <br/>
         <div>
           <button onClick={ loadDataWithJWT }>Klikkaa saadaksesi response 'jwt-protected' reitiltä</button>
