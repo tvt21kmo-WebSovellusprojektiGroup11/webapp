@@ -15,13 +15,13 @@ function App() {
 
   const [ ravintolat, setRavintolat] = useState([]);
 
-  //Haetaan ravintolat ja asetetaan ylää olevaan tilamuuttujaan
+  //Haetaan ravintolat ja asetetaan yllä olevaan tilamuuttujaan
   useEffect(() => {
     const getData = async () => {
       const results = await fetch(Constants.API_ADDRESS+ '/ravintola').then((res) => res.json());
       
       setRavintolat(results);
-      //console.log(results);
+      //setRavintolatconsole.log(results);
     }
     getData();
   }, []);
@@ -51,9 +51,9 @@ function App() {
       <Route path="/ravintolat" element={ <RestaurantListView ravintolat= { ravintolat }/> }/>
   </>
 
-  // Jos login ja 'omistaja', nii näkee protectedin ja roolin mukaisen näkymän. 
+  // Jos login ja 'Omistaja', nii näkee protectedin ja roolin mukaisen näkymän. 
   // Login tarkastetaan jwt:llä, jos ei ole null niin logged in
-  if(userJwt != null  && decodedToken.kayttaja.rooli==="omistaja") {
+  if(userJwt != null  && decodedToken.Kayttaja.Rooli==="Omistaja") {
                                   //propsilla välitetään jwt protectediin, muuttamalla userjwt nulliksi kirjaudutaan ulos
       authRoutes = <>
       <Route path="/protected" element={ <ProtectedTestView jwt= {userJwt} logout= {() => {
@@ -81,7 +81,7 @@ function App() {
     <Link to="/login">Kirjaudu sisään</Link>
     <Link to="signup">Luo käyttäjä</Link>
   </>
-  if(userJwt != null && decodedToken.kayttaja.rooli==="omistaja") {
+  if(userJwt != null && decodedToken.Kayttaja.Rooli==="Omistaja") {
     authLinks = <>
     <Link to="/protected">Suojattu tila</Link>
     <Link to="/roletest">Rooli testi</Link>        
