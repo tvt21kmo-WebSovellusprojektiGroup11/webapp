@@ -28,16 +28,16 @@ router.post('/uusi', passport.authenticate('jwt', { session: false }), (req, res
         req.body.Hintataso,
         req.body.Tyyppi
     ]
-    kayttajanID = req.user.kayttaja.idKayttaja
+    kayttajanID = req.user.Kayttaja.idKayttaja
     var ravintolaInsert = 'INSERT INTO Ravintola ( Nimi, Osoite, Paikkakunta, Saldo, Kuva, Kuvaus, Aukioloaika, Hintataso, Tyyppi, Omistaja ) VALUES ?'
-    var tarkistaKayttajaTyyppi = `SELECT IF((SELECT Rooli from Kayttaja where idKayttaja = ${req.user.kayttaja.idKayttaja}) = "Omistaja", "True", "False") AS OnkoOmistaja`
+    var tarkistaKayttajaTyyppi = `SELECT IF((SELECT Rooli from Kayttaja where idKayttaja = ${req.user.Kayttaja.idKayttaja}) = "Omistaja", "True", "False") AS OnkoOmistaja`
     pool.getConnection(async function (err, connection) {
         if (err) throw err;
         connection.promise().query(tarkistaKayttajaTyyppi).then(
             vastaus => {
                 console.log(vastaus[0][0])
                 if (vastaus[0][0].OnkoOmistaja === "True") {
-                    uusiRavintola.push(req.user.kayttaja.idKayttaja)
+                    uusiRavintola.push(req.user.Kayttaja.idKayttaja)
                     connection.promise().query(ravintolaInsert, [[uusiRavintola]]).then(
                         res.status(201).json({ status: "created" })
                     )
