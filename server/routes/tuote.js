@@ -17,7 +17,7 @@ router.post('/uusi', passport.authenticate('jwt', { session: false }), (req, res
         if (err) throw err;
         connection.promise().query(haeRavintola, [[req.user.kayttaja.idKayttaja]]).then(
             rivit => {
-                lisatty_tuote.push(rivit[0][0]);
+                lisatty_tuote.push(rivit[0][0].idRavintola);
                 connection.promise().query(sqlKasky, [[lisatty_tuote]]).then(
                     res.status(201).json({ status: "created" })
                 )
