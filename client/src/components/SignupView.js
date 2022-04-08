@@ -17,14 +17,7 @@ export default function SignupView() {
     event.preventDefault();
     //Nappia painettaessa muutetaan tilatietoa, joka poistaa napin käyttäjän näkyvistä
     setSignupProcessState("processing");
-    //Näin formin tietokenttiin pääsee käsiksi
-    /*
-    console.log(event.target.Etunimi.value);
-    console.log(event.target.Ika.value);
-    console.log(event.target.kayttajatunnus.value);
-    console.log(event.target.salasana.value);
-    */
-
+    
     // Tietojen lähetys 
     try {
       const result = await axios.post(Constants.API_ADDRESS + '/rekisteroidy', 
@@ -35,8 +28,9 @@ export default function SignupView() {
           Paikkakunta: event.target.Paikkakunta.value,
           Puhelinnumero: event.target.Puhelinnumero.value,
           Ika: event.target.Ika.value,
-          kayttajatunnus: event.target.kayttajatunnus.value,
-          salasana: event.target.salasana.value,
+          Kayttajatunnus: event.target.Kayttajatunnus.value,
+          Salasana: event.target.Salasana.value,
+          Rooli: event.target.Rooli.value,
         });
       console.log(result);
 
@@ -106,11 +100,18 @@ export default function SignupView() {
         </div>
         <div>
           Käyttäjätunnus <br/>
-          <input type="text" name="kayttajatunnus"></input>
+          <input type="text" name="Kayttajatunnus"></input>
         </div>
         <div>
           Salasana <br/>
-          <input type="text" name="salasana"></input>
+          <input type="text" name="Salasana"></input>
+        </div>
+        <div>
+        <label for="Rooli">Valitse rooli</label> <br/>
+          <select id="Rooli" name="Rooli">
+            <option value="Asiakas">Asiakas</option>
+            <option value="Omistaja">Omistaja</option>
+          </select>
         </div>
         <div>
           { signupUIControls }
