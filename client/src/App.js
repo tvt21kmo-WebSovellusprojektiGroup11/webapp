@@ -4,7 +4,7 @@ import SignupView from './components/SignupView';
 import LoginView from './components/LoginView';
 import RestaurantListView from './components/RestaurantListView';
 import ProtectedTestView from './components/ProtectedTestView';
-import RooliTest from './components/RooliTest';
+import UusiRavintola from './components/UusiRavintola';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react'
 import Constants from './Constants.json';
@@ -62,7 +62,7 @@ function App() {
         window.localStorage.removeItem('userJWT');
       }} />} />
       <Route path="/ravintolat" element={<RestaurantListView ravintolat={ravintolat} />} />
-      <Route path="/roletest" element={<RooliTest jwt={userJwt} />} />
+      <Route path="/uusiravintola" element={<UusiRavintola jwt={userJwt} />} />
     </>
     // Jos login nii näkee protectedin. Tarkastetaan jwt:llä, jos ei null niin logged in
   } else if (userJwt != null) {
@@ -84,7 +84,7 @@ function App() {
   if (userJwt != null && decodedToken.Kayttaja.Rooli === "Omistaja") {
     authLinks = <>
       <Link to="/protected">Suojattu tila</Link>
-      <Link to="/roletest">Rooli testi</Link>
+      <Link to="/uusiravintola">Luo ravintola</Link>
     </>
   } else if (userJwt != null) {
     authLinks = <>

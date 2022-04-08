@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Constants from '../Constants.json'
 
 
-export default function RooliTest(props) {
+export default function UusiRavintola(props) {
   const [ravintolaProcessState, setRavintolaProcessState] = useState("idle");
   const lahetaData = async (event) => {
     try {
