@@ -18,6 +18,7 @@ router.post('/', (req, res) => {
         req.body.Puhelinnumero,
         req.body.Ika,
         req.body.Kayttajatunnus,
+
         passwordHash,
         req.body.Rooli
     ]

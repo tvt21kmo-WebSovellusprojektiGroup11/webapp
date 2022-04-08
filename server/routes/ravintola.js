@@ -1,5 +1,6 @@
 const pool = require('../db_handler')();
 const express = require('express');
+const passport = require('passport');
 var router = express.Router();
 
 router.get('/', (req, res) => {
@@ -14,7 +15,40 @@ router.get('/:id', (req, res) => {
         res.json(result);
         if (err) throw err;
     })
-})   
-
+})
+router.post('/uusi', passport.authenticate('jwt', { session: false }), (req, res) => {
+    var uusiRavintola = [
+        req.body.Nimi,
+        req.body.Osoite,
+        req.body.Paikkakunta,
+        req.body.Saldo,
+        req.body.Kuva,
+        req.body.Kuvaus,
+        req.body.Aukioloaika,
+        req.body.Hintataso,
+        req.body.Tyyppi
+    ]
+    kayttajanID = req.user.kayttaja.idKayttaja
+    var ravintolaInsert = 'INSERT INTO Ravintola ( Nimi, Osoite, Paikkakunta, Saldo, Kuva, Kuvaus, Aukioloaika, Hintataso, Tyyppi, Omistaja ) VALUES ?'
+    var tarkistaKayttajaTyyppi = `SELECT IF((SELECT Rooli from Kayttaja where idKayttaja = ${req.user.kayttaja.idKayttaja}) = "Omistaja", "True", "False") AS OnkoOmistaja`
+    pool.getConnection(async function (err, connection) {
+        if (err) throw err;
+        connection.promise().query(tarkistaKayttajaTyyppi).then(
+            vastaus => {
+                console.log(vastaus[0][0])
+                if (vastaus[0][0].OnkoOmistaja === "True") {
+                    uusiRavintola.push(req.user.kayttaja.idKayttaja)
+                    connection.promise().query(ravintolaInsert, [[uusiRavintola]]).then(
+                        res.status(201).json({ status: "created" })
+                    )
+                } else if (vastaus[0][0].OnkoOmistaja === "False") {
+                    res.status(403).json({ status: "not allowed" });
+                } else {
+                    res.status(500).json({ status: "Jottain meni vikkaan" })
+                }
+            }
+        )
+    })
+})
 
 module.exports = router;
