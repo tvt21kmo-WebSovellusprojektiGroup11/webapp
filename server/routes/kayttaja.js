@@ -9,7 +9,7 @@ router.post('/', (req, res) => {
 
     // luodaan hahsattu salasana
     const salt = bcrypt.genSaltSync(6);
-    const passwordHash = bcrypt.hashSync(req.body.salasana, salt);
+    const passwordHash = bcrypt.hashSync(req.body.Salasana, salt);
     const uusiKayttaja = [
         req.body.Etunimi,
         req.body.Sukunimi,
@@ -18,10 +18,11 @@ router.post('/', (req, res) => {
         req.body.Puhelinnumero,
         req.body.Ika,
         req.body.Kayttajatunnus,
-        req.body.Rooli,
-        passwordHash
+
+        passwordHash,
+        req.body.Rooli
     ]
-    var sqlKasky = 'INSERT INTO Kayttaja ( Etunimi, Sukunimi, Osoite, Paikkakunta, Puhelinnumero, Ika, Kayttajatunnus, Rooli, Salasana ) VALUES ?';
+    var sqlKasky = 'INSERT INTO Kayttaja ( Etunimi, Sukunimi, Osoite, Paikkakunta, Puhelinnumero, Ika, Kayttajatunnus, Salasana, Rooli ) VALUES ?';
     // luodaan yhteys tietokantaan operaatioita varten
     pool.getConnection(async function (err, connection) {
         // yhteys on asynkrooninen

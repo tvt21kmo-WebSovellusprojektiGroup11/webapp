@@ -47,15 +47,22 @@
     align-items: center;
     min-width: 200px;
     background-color: white;
+    text-align: center;
 }
 .restaurantItem img {
     width: 60%;
     margin-bottom: 20px;
   }
 
-  @media (max-width: 225px) {
+  @media (max-width: 1200px) {
     .restaurantContainer {  
-      grid-template-columns: 50% 50%;
+      grid-template-columns: 40% 40%;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .restaurantContainer {  
+      grid-template-columns: 40%;
     }
   }
   .restaurantButtonContainer{
