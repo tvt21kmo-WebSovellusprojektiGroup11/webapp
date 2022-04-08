@@ -10,6 +10,7 @@ const pool = require('./db_handler')();
 
 var kayttajaRouter = require('./routes/kayttaja');
 var ravintolaRouter = require('./routes/ravintola');
+var tuoteRouter = require('./routes/tuote');
 
 const passport = require('passport');
 const BasicStrategy = require('passport-http').BasicStrategy;
@@ -21,6 +22,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use('/rekisteroidy', kayttajaRouter);
 app.use('/ravintola', ravintolaRouter);
+app.use('/tuote', tuoteRouter);
 
 
 
@@ -52,7 +54,7 @@ passport.use(
           // if user is not found, reject the request
           done(null, false);
         }
-    })
+      })
   })
 );
 
