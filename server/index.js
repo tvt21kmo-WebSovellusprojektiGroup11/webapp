@@ -33,15 +33,15 @@ app.use('/tuote', tuoteRouter);
 passport.use(
   new BasicStrategy(async (kayttajatunnus, salasana, done) => {
 
-    pool.query('SELECT * FROM kayttaja WHERE kayttajatunus=?',
+    pool.query('SELECT * FROM Kayttaja WHERE Kayttajatunnus=?',
       [kayttajatunnus], function (err, result) {
         //console.log(result);
         if (err) throw err;
-        //console.log(result[0].kayttajatunus);
+        // console.log(result[0].Kayttajatunnus);
         if (result.length > 0) {
-          if (result[0].kayttajatunus != undefined) {
+          if (result[0].Kayttajatunnus != undefined) {
             // if passwords match, then proceed to route handler (the protected resource)
-            if (bcrypt.compareSync(salasana, result[0].salasana)) {
+            if (bcrypt.compareSync(salasana, result[0].Salasana)) {
               done(null, result[0]);
             } else {
               // if passwords does not match, reject the request
