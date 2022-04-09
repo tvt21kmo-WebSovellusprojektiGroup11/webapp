@@ -31,6 +31,7 @@ function App() {
     const query = new URLSearchParams(search).get('s');
 
     const filterRavintolat = (ravintolat, query) => {
+      //tyhjä haku palauttaa kaikki ravintolat
       if (!query) {
         return ravintolat;
       }
@@ -40,8 +41,15 @@ function App() {
       });
     };
     const filteredRavintolat = filterRavintolat(ravintolat, query);
+    
+    //haun jälkeen navBarista painettaessa palautetaan kaikki ravintolat
+    function ravintolatClick() {
+      filterRavintolat = () => {
+        return ravintolat;
+      }
+    }
     //Ravintoloiden haku loppu
-
+  
 
   //ladataan selaimen localstoragesta käyttäjän jwt, jos löytyy
   const jwtFromStorage = window.localStorage.getItem('userJWT');
@@ -118,9 +126,8 @@ function App() {
       <BrowserRouter>
         <div className="navbar">
           <Link to="/"><div>Koti</div></Link>
-          <Link to="/ravintolat">Ravintolat</Link>
+          <Link to="/ravintolat" onClick={ () => ravintolatClick() }>Ravintolat</Link>
           {authLinks}
-
         </div>
         <Routes>
           <Route path="/" element={<Home userLoggedIn={userJwt != null} logout={() => {
