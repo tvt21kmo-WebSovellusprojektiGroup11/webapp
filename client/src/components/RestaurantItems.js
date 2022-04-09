@@ -13,7 +13,7 @@ export default function RestautantItems (props) {
       break;
 
     case "fc": 
-    tyyppi = "Fast casual";  
+      tyyppi = "Fast casual";  
       break;
     
     case "cd":
@@ -25,6 +25,25 @@ export default function RestautantItems (props) {
       break;  
   }
 
+  let hintataso = null;
+  switch(props.Hintataso){
+    case "e": 
+      hintataso = "€";
+      break;
+
+    case "ee":
+      hintataso = "€€";  
+      break;
+
+    case "eee": 
+      hintataso = "€€€";  
+      break;
+    
+    case "eeee":
+      hintataso = "€€€€";  
+      break; 
+  }
+
   if(props.Tyyppi)
   return (
     <div className="restaurantItem">
@@ -32,5 +51,6 @@ export default function RestautantItems (props) {
     <img src={ props.Kuva } />
     <div>Aukioloaika: {props.Aukioloaika}</div>
     <div>{ tyyppi }</div>
+    <div>Hintataso: { hintataso }</div>
     </div>);   
 }

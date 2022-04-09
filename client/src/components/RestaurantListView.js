@@ -11,7 +11,7 @@ export default function RestaurantListView(props) {
         <Haku/>
       </div>
       <div className="restaurantContainer">
-        { props.filteredRavintolat.map(r => <RestaurantItem key={r.idRavintola} Nimi={r.Nimi} Kuva={r.Kuva} Aukioloaika={r.Aukioloaika} Tyyppi={r.Tyyppi}/>)}
+        { props.filteredRavintolat.map(r => <RestaurantItem key={r.idRavintola} Nimi={r.Nimi} Kuva={r.Kuva} Aukioloaika={r.Aukioloaika} Tyyppi={r.Tyyppi} Hintataso={r.Hintataso} />)}
       </div>
     </div>  
   )
