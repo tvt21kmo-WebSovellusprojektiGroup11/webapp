@@ -8,7 +8,6 @@ import UusiRavintola from './components/UusiRavintola';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react'
 import Constants from './Constants.json';
-import axios from 'axios';
 import jwt from 'jsonwebtoken';
 
 function App() {
@@ -25,6 +24,23 @@ function App() {
     }
     getData();
   }, []);
+
+
+    //Ravintoloiden haku
+    const {search} = window.location;
+    const query = new URLSearchParams(search).get('s');
+
+    const filterRavintolat = (ravintolat, query) => {
+      if (!query) {
+        return ravintolat;
+      }
+      return ravintolat.filter((r) => {
+        const ravintolanNimi = r.Nimi.toLowerCase();
+        return ravintolanNimi.includes(query);
+      });
+    };
+    const filteredRavintolat = filterRavintolat(ravintolat, query);
+    //Ravintoloiden haku loppu
 
 
   //ladataan selaimen localstoragesta käyttäjän jwt, jos löytyy
@@ -48,7 +64,7 @@ function App() {
       window.localStorage.setItem('userJWT', newJwt)
     }} />} />
     <Route path="/signup" element={<SignupView />} />
-    <Route path="/ravintolat" element={<RestaurantListView ravintolat={ravintolat} />} />
+    <Route path="/ravintolat" element={<RestaurantListView filteredRavintolat={filteredRavintolat} />} />
   </>
 
   // Jos login ja 'Omistaja', nii näkee protectedin ja roolin mukaisen näkymän. 
@@ -61,7 +77,7 @@ function App() {
         // tyhjennetään local storage, kun kirjaudutaan ulos
         window.localStorage.removeItem('userJWT');
       }} />} />
-      <Route path="/ravintolat" element={<RestaurantListView ravintolat={ravintolat} />} />
+      <Route path="/ravintolat" element={<RestaurantListView filteredRavintolat={filteredRavintolat} />} />
       <Route path="/uusiravintola" element={<UusiRavintola jwt={userJwt} />} />
     </>
     // Jos login nii näkee protectedin. Tarkastetaan jwt:llä, jos ei null niin logged in
@@ -72,7 +88,7 @@ function App() {
         // tyhjennetään local storage, kun kirjaudutaan ulos
         window.localStorage.removeItem('userJWT');
       }} />} />
-      <Route path="/ravintolat" element={<RestaurantListView ravintolat={ravintolat} />} />
+      <Route path="/ravintolat" element={<RestaurantListView filteredRavintolat={filteredRavintolat} />} />
     </>
   }
 
@@ -118,7 +134,6 @@ function App() {
             // tyhjennetään local storage, kun kirjaudutaan ulos
             window.localStorage.removeItem('userJWT');
           }} />} />
-
         </Routes>
       </BrowserRouter>
     </div>
