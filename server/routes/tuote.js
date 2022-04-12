@@ -15,7 +15,7 @@ router.post('/uusi', passport.authenticate('jwt', { session: false }), (req, res
     var haeRavintola = 'SELECT idRavintola FROM Ravintola WHERE Omistaja = ?'
     pool.getConnection(async function (err, connection) {
         if (err) throw err;
-        connection.promise().query(haeRavintola, [[req.user.kayttaja.idKayttaja]]).then(
+        connection.promise().query(haeRavintola, [[req.user.Kayttaja.idKayttaja]]).then(
             rivit => {
                 lisatty_tuote.push(rivit[0][0].idRavintola);
                 connection.promise().query(sqlKasky, [[lisatty_tuote]]).then(

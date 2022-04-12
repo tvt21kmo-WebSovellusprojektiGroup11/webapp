@@ -5,6 +5,8 @@ import axios from 'axios';
 import Constants from '../Constants.json';
 import { useState } from 'react';
 
+//jwt tokenista datanluku testailua. Muutettu käyttäjätiedoksi. Voi halutessaan poistaa
+
 export default function ProtectedTestView(props) {
 
     const [testInfo, setTestInfo] = useState();
@@ -29,16 +31,21 @@ export default function ProtectedTestView(props) {
   
       }
 
+// Käyttäjän id: {decodedToken.Kayttaja.idKayttaja}<br/>
 
   return (
     <div className="homeBox">
-        <h2>ProtectedTestView</h2>
+        <h2>Käyttäjän tiedot</h2>
         <div>
-            Decoded jwt data payloadista: <br/>
-            Käyttäjän id: {decodedToken.Kayttaja.idKayttaja}<br/>
+            
             Etunimi: {decodedToken.Kayttaja.Etunimi}<br/>
             Sukunimi: {decodedToken.Kayttaja.Sukunimi}<br/>
-            P-numero: {decodedToken.Kayttaja.Puhelinnumero}<br/>
+            Osoite: {decodedToken.Kayttaja.Osoite}<br/>
+            Paikkakunta: {decodedToken.Kayttaja.Paikkakunta}<br/>
+            Puhelinnumero: {decodedToken.Kayttaja.Puhelinnumero}<br/>
+            Ika: {decodedToken.Kayttaja.Ika}<br/>
+            Käyttäjän saldo: {decodedToken.Kayttaja.Saldo}<br/>
+            Rooli: {decodedToken.Kayttaja.Rooli}<br/>
             <br/>
         <div>
           <button onClick={ loadDataWithJWT }>Klikkaa saadaksesi response 'jwt-protected' reitiltä</button>
