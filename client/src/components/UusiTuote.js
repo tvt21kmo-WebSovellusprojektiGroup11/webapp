@@ -30,7 +30,7 @@ export default function UusiTuote(props) {
         }, {
             headers: { 'Authorization': 'Bearer ' + props.jwt, 'Content-Type': 'application/json' }
           });
-      //console.log(result);
+      console.log(result);
 
       setTuoteProcessState("tuoteSuccess");
 

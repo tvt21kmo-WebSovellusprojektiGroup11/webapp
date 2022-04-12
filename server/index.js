@@ -84,7 +84,11 @@ app.post('/login', passport.authenticate('basic', { session: false }), (req, res
       idKayttaja: req.user.idKayttaja,
       Etunimi: req.user.Etunimi,
       Sukunimi: req.user.Sukunimi,
+      Osoite: req.user.Osoite,
+      Paikkakunta: req.user.Paikkakunta,
       Puhelinnumero: req.user.Puhelinnumero,
+      Ika: req.user.Ika,
+      Saldo: req.user.Saldo,
       Rooli: req.user.Rooli,
     }
   };

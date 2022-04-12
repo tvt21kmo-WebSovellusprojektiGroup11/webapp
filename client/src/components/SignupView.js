@@ -28,6 +28,7 @@ export default function SignupView() {
           Paikkakunta: event.target.Paikkakunta.value,
           Puhelinnumero: event.target.Puhelinnumero.value,
           Ika: event.target.Ika.value,
+          Saldo: event.target.Saldo.value,
           Kayttajatunnus: event.target.Kayttajatunnus.value,
           Salasana: event.target.Salasana.value,
           Rooli: event.target.Rooli.value,
@@ -97,6 +98,10 @@ export default function SignupView() {
         <div>
           Ikä <br/>
           <input type="number" name="Ika"></input>
+        </div>
+        <div>
+          Saldo <br/>
+          <input type="number" name="Saldo"></input>
         </div>
         <div>
           Käyttäjätunnus <br/>

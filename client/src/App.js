@@ -109,13 +109,13 @@ function App() {
   </>
   if (userJwt != null && decodedToken.Kayttaja.Rooli === "Omistaja") {
     authLinks = <>
-      <Link to="/protected">Suojattu tila</Link>
+      <Link to="/protected">Käyttäjätiedot</Link>
       <Link to="/uusiravintola">Luo ravintola</Link>
       <Link to="/uusituote">Lisää tuote</Link>
     </>
   } else if (userJwt != null) {
     authLinks = <>
-      <Link to="/protected">Suojattu tila</Link>
+      <Link to="/protected">Käyttäjätiedot</Link>
     </>
   }
 
