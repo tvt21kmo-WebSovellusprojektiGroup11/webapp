@@ -11,6 +11,7 @@ const pool = require('./db_handler')();
 var kayttajaRouter = require('./routes/kayttaja');
 var ravintolaRouter = require('./routes/ravintola');
 var tuoteRouter = require('./routes/tuote');
+var tilausRouter = require('./routes/tilaus');
 
 const passport = require('passport');
 const BasicStrategy = require('passport-http').BasicStrategy;
@@ -23,7 +24,7 @@ app.use(cors());
 app.use('/rekisteroidy', kayttajaRouter);
 app.use('/ravintola', ravintolaRouter);
 app.use('/tuote', tuoteRouter);
-
+app.use('/tilaus', tilausRouter)
 
 
 /*********************************************
