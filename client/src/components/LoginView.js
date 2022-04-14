@@ -66,7 +66,7 @@ export default function LoginView(props) {
         </div>
         <div>
           Salasana <br/>
-          <input type="text" name="salasana" />
+          <input type="password" name="salasana" />
         </div>
         <div>
           { loginUIControls }
