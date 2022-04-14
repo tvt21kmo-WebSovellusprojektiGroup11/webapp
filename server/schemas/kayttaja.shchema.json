@@ -1,0 +1,137 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+        {
+            "Etunimi": "Testi",
+            "Sukunimi": "Kaali",
+            "Osoite": "Testikuja 58 A 1",
+            "Paikkakunta": "Oulu",
+            "Puhelinnumero": "045666",
+            "Ika": 55,
+            "Tilaus": null,
+            "Historia": null,
+            "Saldo": 77,
+            "Kayttajatunnus": "asd123",
+            "Salasana": "asd123",
+            "Rooli": "asiakas"
+        }
+    ],
+    "required": [
+        "Etunimi",
+        "Sukunimi",
+        "Osoite",
+        "Paikkakunta",
+        "Puhelinnumero",
+        "Kayttajatunnus",
+        "Salasana",
+        "Rooli"
+    ],
+    "properties": {
+        "Etunimi": {
+            "$id": "#/properties/Etunimi",
+            "type": "string",
+            "title": "The Etunimi schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "Testi"
+            ]
+        },
+        "Sukunimi": {
+            "$id": "#/properties/Sukunimi",
+            "type": "string",
+            "title": "The Sukunimi schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "Teppo"
+            ]
+        },
+        "Osoite": {
+            "$id": "#/properties/Osoite",
+            "type": "string",
+            "title": "The Osoite schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "Testikuja 58 A 1"
+            ]
+        },
+        "Paikkakunta": {
+            "$id": "#/properties/Paikkakunta",
+            "type": "string",
+            "title": "The Paikkakunta schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "Oulu"
+            ]
+        },
+        "Puhelinnumero": {
+            "$id": "#/properties/Puhelinnumero",
+            "type": "string",
+            "title": "The Puhelinnumero schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "045666"
+            ]
+        },
+        "Ika": {
+            "$id": "#/properties/Ika",
+            "type": "number",
+            "title": "The Ika schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0.0,
+            "examples": [
+                55
+            ]
+        },
+        "Saldo": {
+            "$id": "#/properties/Saldo",
+            "type": "number",
+            "title": "The Saldo schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0.0,
+            "examples": [
+                77.6
+            ]
+        },
+        "Kayttajatunnus": {
+            "$id": "#/properties/Kayttajatunnus",
+            "type": "string",
+            "title": "The Kayttajatunnus schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "asd123"
+            ]
+        },
+        "Salasana": {
+            "$id": "#/properties/Salasana",
+            "type": "string",
+            "title": "The Salasana schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "asd123"
+            ]
+        },
+        "Rooli": {
+            "$id": "#/properties/Rooli",
+            "type": "string",
+            "title": "The Rooli schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "asiakas"
+            ]
+        }
+    },
+    "additionalProperties": true
+}

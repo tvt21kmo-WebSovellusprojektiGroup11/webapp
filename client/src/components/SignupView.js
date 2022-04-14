@@ -18,6 +18,8 @@ export default function SignupView() {
     //Nappia painettaessa muutetaan tilatietoa, joka poistaa napin käyttäjän näkyvistä
     setSignupProcessState("processing");
     
+    console.log(typeof event.target.Saldo.value);
+    console.log(typeof Number(event.target.Saldo.value));
     // Tietojen lähetys 
     try {
       const result = await axios.post(Constants.API_ADDRESS + '/rekisteroidy', 
@@ -27,8 +29,8 @@ export default function SignupView() {
           Osoite: event.target.Osoite.value,
           Paikkakunta: event.target.Paikkakunta.value,
           Puhelinnumero: event.target.Puhelinnumero.value,
-          Ika: event.target.Ika.value,
-          Saldo: event.target.Saldo.value,
+          Ika: Number(event.target.Ika.value),
+          Saldo: Number(event.target.Saldo.value),
           Kayttajatunnus: event.target.Kayttajatunnus.value,
           Salasana: event.target.Salasana.value,
           Rooli: event.target.Rooli.value,
@@ -101,7 +103,7 @@ export default function SignupView() {
         </div>
         <div>
           Saldo <br/>
-          <input type="number" name="Saldo"></input>
+          <input type="number" name="Saldo" step="0.01"></input>
         </div>
         <div>
           Käyttäjätunnus <br/>
@@ -109,7 +111,7 @@ export default function SignupView() {
         </div>
         <div>
           Salasana <br/>
-          <input type="text" name="Salasana"></input>
+          <input type="password" name="Salasana"></input>
         </div>
         <div>
         <label for="Rooli">Valitse rooli</label> <br/>

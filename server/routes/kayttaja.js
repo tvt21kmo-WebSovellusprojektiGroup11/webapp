@@ -2,9 +2,26 @@ const bcrypt = require('bcryptjs');
 const pool = require('../db_handler')();
 const express = require('express');
 var router = express.Router();
+const Ajv = require("ajv")
+const ajv = new Ajv()
 
+const kayttajaSchema= require('../schemas/kayttaja.shchema.json');
+const kayttajaInfoValidator = ajv.compile(kayttajaSchema);
+
+
+//middleware jolla tarkastetaan onko kaikissa kentissä arvot ennen lähetystä
+const kayttajaInfoValidateMw = function(req, res, next) {
+    const validationResult = kayttajaInfoValidator(req.body);
+
+    if(validationResult == true) {
+        next();
+    }else {
+        console.log(kayttajaInfoValidator.errors);
+        res.status(400).json({ status: "puuttuvia tietoja"})
+    }
+}
 //Uuden käyttäjän lisääminen
-router.post('/', (req, res) => {
+router.post('/', kayttajaInfoValidateMw, (req, res) => {
     //console.log(req.body);
 
     // luodaan hahsattu salasana
