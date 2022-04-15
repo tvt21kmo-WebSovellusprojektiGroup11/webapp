@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default function MenuItem(props) {
+    var tyyppi;
     switch (props.Kategoria) {
         case ("p"):
             tyyppi = "pääruoka"
