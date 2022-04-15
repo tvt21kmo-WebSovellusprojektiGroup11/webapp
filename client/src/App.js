@@ -27,30 +27,30 @@ function App() {
   }, []);
 
 
-    //Ravintoloiden haku
-    const {search} = window.location;
-    const query = new URLSearchParams(search).get('s');
+  //Ravintoloiden haku
+  const { search } = window.location;
+  const query = new URLSearchParams(search).get('s');
 
-    const filterRavintolat = (ravintolat, query) => {
-      //tyhjä haku palauttaa kaikki ravintolat
-      if (!query) {
-        return ravintolat;
-      }
-      return ravintolat.filter((r) => {
-        const ravintolanNimi = r.Nimi.toLowerCase();
-        return ravintolanNimi.includes(query);
-      });
-    };
-    const filteredRavintolat = filterRavintolat(ravintolat, query);
-    
-    //haun jälkeen navBarista painettaessa palautetaan kaikki ravintolat
-    function ravintolatClick() {
-      filterRavintolat = () => {
-        return ravintolat;
-      }
+  const filterRavintolat = (ravintolat, query) => {
+    //tyhjä haku palauttaa kaikki ravintolat
+    if (!query) {
+      return ravintolat;
     }
-    //Ravintoloiden haku loppu
-  
+    return ravintolat.filter((r) => {
+      const ravintolanNimi = r.Nimi.toLowerCase();
+      return ravintolanNimi.includes(query);
+    });
+  };
+  const filteredRavintolat = filterRavintolat(ravintolat, query);
+
+  //haun jälkeen navBarista painettaessa palautetaan kaikki ravintolat
+  function ravintolatClick() {
+    filterRavintolat = () => {
+      return ravintolat;
+    }
+  }
+  //Ravintoloiden haku loppu
+
 
   //ladataan selaimen localstoragesta käyttäjän jwt, jos löytyy
   const jwtFromStorage = window.localStorage.getItem('userJWT');
@@ -86,7 +86,7 @@ function App() {
         // tyhjennetään local storage, kun kirjaudutaan ulos
         window.localStorage.removeItem('userJWT');
       }} />} />
-      <Route path="/ravintolat" element={<RestaurantListView filteredRavintolat={filteredRavintolat} />} />
+      <Route path="/ravintolat" element={<RestaurantListView filteredRavintolat={filteredRavintolat} jwt={userJwt} />} />
       <Route path="/uusiravintola" element={<UusiRavintola jwt={userJwt} />} />
       <Route path="/uusituote" element={<UusiTuote jwt={userJwt} />} />
     </>
@@ -98,7 +98,7 @@ function App() {
         // tyhjennetään local storage, kun kirjaudutaan ulos
         window.localStorage.removeItem('userJWT');
       }} />} />
-      <Route path="/ravintolat" element={<RestaurantListView filteredRavintolat={filteredRavintolat} />} />
+      <Route path="/ravintolat" element={<RestaurantListView filteredRavintolat={filteredRavintolat} jwt={userJwt} />} />
     </>
   }
 
@@ -129,7 +129,7 @@ function App() {
       <BrowserRouter>
         <div className="navbar">
           <Link to="/"><div>Koti</div></Link>
-          <Link to="/ravintolat" onClick={ () => ravintolatClick() }>Ravintolat</Link>
+          <Link to="/ravintolat" onClick={() => ravintolatClick()}>Ravintolat</Link>
           {authLinks}
         </div>
         <Routes>
