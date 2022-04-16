@@ -1,0 +1,125 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+        {
+            "Nimi": "TestiCaseRavintola",
+            "Osoite": "Testiravintola 123",
+            "Paikkakunta": "Oulu",
+            "Saldo": 77,
+            "Kuva": "https://public.keskofiles.com/f/recipe/napolilainenpizza_21?w=2400&fit=crop",
+            "Kuvaus": "TestiCaseRavintola",
+            "Aukioloaika": "MA-PE: 11:00-20:00, LA: 11:00-22:00, SU: SULJETTU",
+            "Hintataso": "ee",
+            "Tyyppi": "cd"
+        }
+    ],
+    "required": [
+        "Nimi",
+        "Osoite",
+        "Paikkakunta",
+        "Saldo",
+        "Kuva",
+        "Kuvaus",
+        "Aukioloaika",
+        "Hintataso",
+        "Tyyppi"
+    ],
+    "properties": {
+        "Nimi": {
+            "$id": "#/properties/Nimi",
+            "type": "string",
+            "title": "The Nimi schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "TestiCaseRavintola"
+            ]
+        },
+        "Osoite": {
+            "$id": "#/properties/Osoite",
+            "type": "string",
+            "title": "The Osoite schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "Testiravintola 123"
+            ]
+        },
+        "Paikkakunta": {
+            "$id": "#/properties/Paikkakunta",
+            "type": "string",
+            "title": "The Paikkakunta schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "Oulu"
+            ]
+        },
+        "Saldo": {
+            "$id": "#/properties/Saldo",
+            "type": "number",
+            "title": "The Saldo schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0,
+            "examples": [
+                77
+            ]
+        },
+        "Kuva": {
+            "$id": "#/properties/Kuva",
+            "type": "string",
+            "title": "The Kuva schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "https://public.keskofiles.com/f/recipe/napolilainenpizza_21?w=2400&fit=crop"
+            ]
+        },
+        "Kuvaus": {
+            "$id": "#/properties/Kuvaus",
+            "type": "string",
+            "title": "The Kuvaus schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "TestiCaseRavintola"
+            ]
+        },
+        "Aukioloaika": {
+            "$id": "#/properties/Aukioloaika",
+            "type": "string",
+            "title": "The Aukioloaika schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "MA-PE: 11:00-20:00, LA: 11:00-22:00, SU: SULJETTU"
+            ]
+        },
+        "Hintataso": {
+            "$id": "#/properties/Hintataso",
+            "type": "string",
+            "title": "The Hintataso schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "ee"
+            ]
+        },
+        "Tyyppi": {
+            "$id": "#/properties/Tyyppi",
+            "type": "string",
+            "title": "The Tyyppi schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "cd"
+            ]
+        }
+    },
+    "additionalProperties": true
+}

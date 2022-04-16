@@ -2,6 +2,25 @@ const pool = require('../db_handler')();
 const express = require('express');
 const passport = require('passport');
 var router = express.Router();
+const Ajv = require("ajv")
+const ajv = new Ajv()
+
+
+const ravintolaSchema= require('../schemas/ravintola.schema.json');
+const ravintolaInfoValidator = ajv.compile(ravintolaSchema);
+
+
+//middleware jolla tarkastetaan onko kaikissa kentissä arvot ennen lähetystä
+const ravintolaInfoValidateMw = function(req, res, next) {
+    const validationResult = ravintolaInfoValidator(req.body);
+
+    if(validationResult == true) {
+        next();
+    }else {
+        console.log(ravintolaInfoValidator.errors);
+        res.status(400).json({ status: "puuttuvia tietoja"})
+    }
+}
 
 router.get('/', (req, res) => {
     pool.query('SELECT * from Ravintola', (err, result) => {
@@ -16,7 +35,7 @@ router.get('/:id', (req, res) => {
         if (err) throw err;
     })
 })
-router.post('/uusi', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.post('/uusi', ravintolaInfoValidateMw, passport.authenticate('jwt',  { session: false }), (req, res) => {
     var uusiRavintola = [
         req.body.Nimi,
         req.body.Osoite,

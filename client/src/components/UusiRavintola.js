@@ -13,7 +13,7 @@ export default function UusiRavintola(props) {
         Nimi: event.target.Nimi.value,
         Osoite: event.target.Osoite.value,
         Paikkakunta: event.target.Paikkakunta.value,
-        Saldo: event.target.Saldo.value,
+        Saldo: Number(event.target.Saldo.value),
         Kuva: event.target.Kuva.value,
         Kuvaus: event.target.Kuvaus.value,
         Aukioloaika: event.target.Aukioloaika.value,

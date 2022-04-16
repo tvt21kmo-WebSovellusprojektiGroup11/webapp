@@ -11,7 +11,7 @@ const serverAddress = "http://localhost:3001";
 
 
 
-describe('Registeröinti API test', function () {
+describe('Rekisteröinti API test', function () {
 
     before(function(){
         server.start();
@@ -36,7 +36,7 @@ describe('Registeröinti API test', function () {
                 Saldo: 77,
                 Kayttajatunnus: "testCase",
                 Salasana: "testCase",
-                Rooli: "asiakas"
+                Rooli: "Omistaja"
             })
             .end(function(err, res) {
                 expect(err).to.be.null;
