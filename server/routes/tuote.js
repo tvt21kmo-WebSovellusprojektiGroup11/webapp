@@ -26,6 +26,17 @@ router.post('/uusi', passport.authenticate('jwt', { session: false }), (req, res
     })
 })
 
+router.get('/:idravintola', (req, res) => {
+    pool.getConnection(async function (err, connection) {
+        if (err) throw err;
+        connection.promise().query('SELECT * FROM Tuote where Valmistaja = ?', req.params.idravintola).then(
+            connection.end()
+        ).then(rivit => {
+            res.send(rivit[0]);
+        })
+    })
+})
+
 router.get('/', (req, res) => {
     pool.getConnection(async function (err, connection) {
         if (err) throw err;

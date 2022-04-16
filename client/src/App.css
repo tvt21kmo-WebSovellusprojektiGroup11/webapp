@@ -1,78 +1,129 @@
 .navbar {
-    display: flex;
-    background-color:lightgray;
-    margin-left: auto;
-    margin-right: auto;
-    width: 1200px;
-  }
-  
-  .navbar > * {
-    margin-right: 10px;
-  }
-
-  .banner {
-      margin-left: auto;
-      margin-right: auto;
-      border: 1px solid;
-      background-color: lightblue;
-      width: 1200px;
-  }
-
-  .homeBox {
-    margin-left: auto;
-    margin-right: auto; 
-    margin-top: 20px;
-    background-color:lightgray;
-    width: 1200px;
-  }
-
-  .restaurantContainer {
-    display: grid;
-    background-color:lightgray;
-    grid-template-columns: 33% 33% 33%;
-    margin-left: auto;
-    margin-right: auto; 
-    border: 1px solid;
-    margin-top: 20px;
-    width: 1200px;
+  display: flex;
+  background-color: lightgray;
+  margin-left: auto;
+  margin-right: auto;
+  width: 1200px;
 }
-  
-.restaurantItem{
-    border: 1px solid black;
-    margin: 30px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-width: 200px;
-    background-color: white;
-    text-align: center;
+
+.navbar>* {
+  margin-right: 10px;
 }
+
+.banner {
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid;
+  background-color: lightblue;
+  width: 1200px;
+}
+
+.homeBox {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  background-color: lightgray;
+  width: 1200px;
+}
+
+.restaurantContainer {
+  display: grid;
+  background-color: lightgray;
+  grid-template-columns: 33% 33% 33%;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid;
+  margin-top: 20px;
+  width: 1200px;
+}
+
+.restaurantItem {
+  border: 1px solid black;
+  margin: 30px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 200px;
+  background-color: white;
+  text-align: center;
+}
+
+.menuContainer {
+  display: grid;
+  background-color: lightgray;
+  grid-template-columns: 33% 33% 33%;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid;
+  margin-top: 20px;
+  width: 1200px;
+}
+
+.menuItem {
+  border: 1px solid black;
+  margin: 30px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 200px;
+  background-color: white;
+  text-align: center;
+}
+
 .restaurantItem img {
-    width: 60%;
-    margin-bottom: 20px;
-  }
+  width: 60%;
+  margin-bottom: 20px;
+}
 
-  @media (max-width: 1200px) {
-    .restaurantContainer {  
-      grid-template-columns: 40% 40%;
-    }
-  }
+.menuItem img {
+  width: 60%;
+  margin-bottom: 20px;
+}
 
-  @media (max-width: 800px) {
-    .restaurantContainer {  
-      grid-template-columns: 40%;
-    }
+@media (max-width: 1200px) {
+  .restaurantContainer {
+    grid-template-columns: 40% 40%;
   }
-  .restaurantButtonContainer{
-    width: 1200px;
-    margin-left: auto;
-    margin-right: auto; 
-    margin-top: 5px;
-    margin-bottom: -10px;
-  }
+}
 
-  .haku {
-    text-align: center;
+@media (max-width: 800px) {
+  .restaurantContainer {
+    grid-template-columns: 40%;
   }
+}
+
+@media (max-width: 1200px) {
+  .menuContainer {
+    grid-template-columns: 40% 40%;
+  }
+}
+
+@media (max-width: 800px) {
+  .menuContainer {
+    grid-template-columns: 40%;
+  }
+}
+
+.restaurantButtonContainer {
+  width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
+  margin-bottom: -10px;
+}
+
+.menuButtonContainer {
+  width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
+  margin-bottom: -10px;
+}
+
+.haku {
+  text-align: center;
+}
