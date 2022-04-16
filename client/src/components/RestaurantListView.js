@@ -13,17 +13,37 @@ export default function RestaurantListView(props) {
       t => setMenuItem(t.data)
     )
   }
+  const [ostosKarry, setKarryyn] = useState({ Tuotteet: new Array });
+  function handleKarry(idTuote) {
+    var uusikarry = ostosKarry
+    uusikarry.Tuotteet.push(idTuote);
+    setKarryyn(uusikarry);
+  }
+
+  async function hanskaaTilaus() {
+    console.log(ostosKarry.Tuotteet);
+    var response = await axios.post(Constants.API_ADDRESS + '/tilaus/uusi', {
+      Tuotteet: ostosKarry.Tuotteet
+    }, {
+      headers: { 'Authorization': 'Bearer ' + props.jwt, 'Content-Type': 'application/json' }
+    }
+    )
+    console.log(response);
+    setKarryyn({ Tuotteet: new Array });
+    alert("Tilaus lähetetty.");
+  }
 
   console.log(props.jwt)
   if (menuItem)
     return (
       <div>
         <div className="menuContainer">
-          {(menuItem).map(t => <MenuItem key={t.idTuote} Nimi={t.Nimi} Kuva={t.Kuva} Hinta={t.Hinta} Kategoria={t.Kategoria} Kuvaus={t.Kuvaus} />)}
+          {(menuItem).map(t => <MenuItem key={t.idTuote} Nimi={t.Nimi} Kuva={t.Kuva} Hinta={t.Hinta} Kategoria={t.Kategoria} Kuvaus={t.Kuvaus} onKarryClick={() => handleKarry(t.idTuote)} />)}
 
         </div>
         <div className='menuButtonContainer'>
-          <button onClick={() => setMenuItem(NaN)}>Selaa ravintoloita</button>
+          <button onClick={() => hanskaaTilaus()}> Lähetä tilaus</button>
+          <button onClick={() => setMenuItem(NaN)}>Palaa selaamaan ravintoloita</button>
         </div>
       </div>
     )
