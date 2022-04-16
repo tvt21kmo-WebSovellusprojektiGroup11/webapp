@@ -5,7 +5,7 @@ var router = express.Router();
 const Ajv = require("ajv")
 const ajv = new Ajv()
 
-const kayttajaSchema= require('../schemas/kayttaja.shchema.json');
+const kayttajaSchema= require('../schemas/kayttaja.schema.json');
 const kayttajaInfoValidator = ajv.compile(kayttajaSchema);
 
 
