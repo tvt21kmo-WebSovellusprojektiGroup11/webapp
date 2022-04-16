@@ -17,7 +17,6 @@ export default function MenuItem(props) {
             <div>Hinta: {props.Hinta}</div>
             <div>{tyyppi}</div>
             <div>{props.Kuvaus}</div>
-            <button onClick={props.onKarryClick}>Lisää ostoskärryyn</button>
         </div>
     );
 }

@@ -5,6 +5,7 @@ import Haku from './Haku';
 import { useState } from 'react'
 import axios from 'axios';
 import Constants from '../Constants.json'
+import ViimeistelyLomake from './ViimeistelyLomake';
 
 export default function RestaurantListView(props) {
   const [menuItem, setMenuItem] = useState();
@@ -20,21 +21,26 @@ export default function RestaurantListView(props) {
     setKarryyn(uusikarry);
   }
 
-  async function hanskaaTilaus() {
+  async function hanskaaTilaus(eventti) {
     console.log(ostosKarry.Tuotteet);
     var response = await axios.post(Constants.API_ADDRESS + '/tilaus/uusi', {
-      Tuotteet: ostosKarry.Tuotteet
+      Tuotteet: ostosKarry.Tuotteet,
+      Toimitusaika: eventti.target.Toimitusaika.value
     }, {
       headers: { 'Authorization': 'Bearer ' + props.jwt, 'Content-Type': 'application/json' }
     }
+    ).then(console.log(response)
+    ).then(setKarryyn({ Tuotteet: new Array })
+    ).then(setViimeistely(false)
+    ).then(alert("Tilaus lähetetty.")
     )
-    console.log(response);
-    setKarryyn({ Tuotteet: new Array });
-    alert("Tilaus lähetetty.");
   }
 
+  const [lomakeTila, setViimeistely] = useState(false);
+
+
   console.log(props.jwt)
-  if (menuItem)
+  if (menuItem && !lomakeTila) {
     return (
       <div>
         <div className="menuContainer">
@@ -42,12 +48,28 @@ export default function RestaurantListView(props) {
 
         </div>
         <div className='menuButtonContainer'>
-          <button onClick={() => hanskaaTilaus()}> Lähetä tilaus</button>
+          <button onClick={() => setViimeistely(true)}> Viimeistele tilaus</button>
           <button onClick={() => setMenuItem(NaN)}>Palaa selaamaan ravintoloita</button>
         </div>
       </div>
     )
-  if (!props.jwt)
+  }
+  else if (lomakeTila) {
+    console.log(menuItem);
+    let karrynTuotteet = [];
+    for (var i = 0; i < ostosKarry.Tuotteet.length; i++) {
+      for (var x = 0; x < menuItem.length; x++) {
+        if (ostosKarry.Tuotteet[i] == menuItem[x].idTuote) {
+          karrynTuotteet.push(menuItem[x])
+        }
+      }
+    }
+    console.log(karrynTuotteet);
+    return (
+      <ViimeistelyLomake karrynSisalto={karrynTuotteet} onTilausClick={ev => hanskaaTilaus(ev)} />
+    )
+  }
+  else if (!props.jwt)
     return (
       <div>
         <div className="haku">
