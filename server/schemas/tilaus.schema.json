@@ -1,0 +1,63 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://tilaus.example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+        {
+            "Toimitusaika": "18:54",
+            "Tuotteet": [
+                1,
+                2
+            ]
+        }
+    ],
+    "required": [
+        "Toimitusaika",
+        "Tuotteet"
+    ],
+    "properties": {
+        "Toimitusaika": {
+            "$id": "#/properties/Toimitusaika",
+            "type": "string",
+            "title": "The Toimitusaika schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "18:54"
+            ]
+        },
+        "Tuotteet": {
+            "$id": "#/properties/Tuotteet",
+            "type": "array",
+            "title": "The Tuotteet schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": [],
+            "examples": [
+                [
+                    1,
+                    2
+                ]
+            ],
+            "items": {
+                "$id": "#/properties/Tuotteet/items",
+                "anyOf": [
+                    {
+                        "$id": "#/properties/Tuotteet/items/anyOf/0",
+                        "type": "integer",
+                        "title": "The first anyOf schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": 0,
+                        "examples": [
+                            1,
+                            2
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "additionalProperties": true
+}

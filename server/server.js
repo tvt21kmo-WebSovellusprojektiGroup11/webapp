@@ -111,9 +111,9 @@ const jwtOptions = {
 }
 
 passport.use(new JwtStrategy(jwtOptions, function (jwt_payload, done) {
-  console.log('JWT on validi');
-  console.log('Payloadi: ');
-  console.log(jwt_payload);
+  //console.log('JWT on validi');
+  //console.log('Payloadi: ');
+  //console.log(jwt_payload);
 
   //tässä voidaan välittää serverille payloadin sisältö
   done(null, jwt_payload);

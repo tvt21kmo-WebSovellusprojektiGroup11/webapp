@@ -50,7 +50,7 @@ describe('Tuote API test', function () {
                         Salasana: 'testCase'
                     })*/
                     .end((err, res) => {
-                        console.log('this runs the login part');
+                        //console.log('this runs the login part');
                         expect(res).to.have.status(200);
                         var generatedJWT = res.body.jwt;
                         //console.log(generatedJWT);  
@@ -78,7 +78,6 @@ describe('Tuote API test', function () {
                 .post('/login')
                 .auth('testCase123', 'testCase')
                 .end((err, res) => {
-                    console.log('this runs the login part');
                     expect(res).to.have.status(401);     
                     var generatedJWT = res.body.jwt;
                     //console.log(generatedJWT);
@@ -106,7 +105,6 @@ describe('Tuote API test', function () {
                 .post('/login')
                 .auth('testCase', 'testCase')
                 .end((err, res) => {
-                    console.log('this runs the login part');
                     expect(res).to.have.status(200);     
                     var generatedJWT = res.body.jwt;
                     //console.log(generatedJWT);
@@ -133,7 +131,6 @@ describe('Tuote API test', function () {
                 .post('/login')
                 .auth('testCase', 'testCase')
                 .end((err, res) => {
-                    console.log('this runs the login part');
                     expect(res).to.have.status(200);     
                     var generatedJWT = res.body.jwt;
                     //console.log(generatedJWT);
@@ -161,7 +158,6 @@ describe('Tuote API test', function () {
                 // send user login details
                 .auth('testCase', 'testCase')
                 .end((err, res) => {
-                    console.log('this runs the login part');
                     expect(res).to.have.status(200);     
                     var generatedJWT = res.body.jwt;
                     //console.log(generatedJWT);
@@ -219,5 +215,31 @@ describe('Tuote API test', function () {
                     done();
                 })
         })
+        it('pitäisi hylätä uuden tuotteen lisäyksen kun datassa vääriä kenttänimiä', function(done) {
+            chai.request(serverAddress)
+                .post('/login')
+                .auth('testCase', 'testCase')
+                .end((err, res) => {
+                    expect(res).to.have.status(200);     
+                    var generatedJWT = res.body.jwt;
+                    //console.log(generatedJWT);
+                        
+            chai.request(serverAddress)
+                .post('/tuote/uusi')
+                .set({ "Authorization": `Bearer ${generatedJWT}` })
+                .send({
+                    Nimiii: "test product", //
+                    Kuvaus: "tst kuvaus ",
+                    Kategoria: "a",
+                    Hintasdf: 100,  //
+                    Kuva: "https://dummyjson.com/image/i/products/1/3.jpg"
+                })
+                .end(function(err, res) {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(400);
+                    done();
+                    })
+                })   
+                })
 })
 })

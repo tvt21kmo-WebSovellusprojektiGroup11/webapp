@@ -133,7 +133,7 @@ describe('Rekisteröinti API test', function () {
             })
         })
 
-        it('pitäisi hylätä pyynnön, kun pyynnössä vääriä datatyyppejä ', function(done) {
+        it('pitäisi hylätä pyynnön, kun pyynnössä vääriä tietotyyppejä ', function(done) {
             chai.request(serverAddress)
             .post('/rekisteroidy')
             .send({
@@ -142,7 +142,7 @@ describe('Rekisteröinti API test', function () {
                 Osoite: "Testikuja 58 A 1",
                 Paikkakunta: "Oulu",
                 Puhelinnumero: "045666",
-                Ika: "55",
+                Ika: "55", //Väärä tietotyyppi
                 Saldo: 77,
                 Kayttajatunnus: "testCase",
                 Salasana: "testCase",
