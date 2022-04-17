@@ -22,11 +22,11 @@ export default function UusiTuote(props) {
     try {
       const result = await axios.post(Constants.API_ADDRESS + '/tuote/uusi', 
         {
-          nimi: event.target.nimi.value,
-          kuvaus: event.target.kuvaus.value,
-          kategoria: event.target.kategoria.value,
-          hinta: event.target.hinta.value,
-          kuva: event.target.kuva.value
+          Nimi: event.target.Nimi.value,
+          Kuvaus: event.target.Kuvaus.value,
+          Kategoria: event.target.Kategoria.value,
+          Hinta: Number(event.target.Hinta.value),
+          Kuva: event.target.Kuva.value
         }, {
             headers: { 'Authorization': 'Bearer ' + props.jwt, 'Content-Type': 'application/json' }
           });
@@ -68,15 +68,15 @@ export default function UusiTuote(props) {
       <form onSubmit= { handleTuoteSubmit }>
         <div>
           Nimi <br/>
-          <input type="text" name="nimi"></input>
+          <input type="text" name="Nimi"></input>
         </div>
         <div>
           Kuvaus <br/>
-          <input type="text" name="kuvaus"></input>
+          <input type="text" name="Kuvaus"></input>
         </div>
         <div>
-        <label for="kategoria">Kategoria</label> <br/>
-          <select id="kategoria" name="kategoria">
+        <label for="Kategoria">Kategoria</label> <br/>
+          <select id="Kategoria" name="Kategoria">
             <option value="a">Alkuruoka</option>
             <option value="p">Pääruoka</option>
             <option value="j">Jälkiruoka</option>
@@ -84,11 +84,11 @@ export default function UusiTuote(props) {
         </div>
         <div>
           Hinta <br/>
-          <input type="number" name="hinta" step="0.01"></input>
+          <input type="number" name="Hinta" step="0.01"></input>
         </div>
         <div>
           Kuva <br/>
-          <input type="text" name="kuva"></input>
+          <input type="text" name="Kuva"></input>
         </div>
         <div>
           { tuoteUIControls }

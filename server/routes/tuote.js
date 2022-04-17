@@ -2,14 +2,33 @@ const pool = require('../db_handler')();
 const express = require('express');
 const passport = require('passport');
 var router = express.Router();
+const Ajv = require("ajv")
+const ajv = new Ajv()
 
-router.post('/uusi', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+const tuoteSchema= require('../schemas/tuote.schema.json');
+const tuoteInfoValidator = ajv.compile(tuoteSchema);
+
+
+//middleware jolla tarkastetaan onko kaikissa kentissä arvot ennen lähetystä
+const tuoteInfoValidateMw = function(req, res, next) {
+    const validationResult = tuoteInfoValidator(req.body);
+
+    if(validationResult == true) {
+        next();
+    }else {
+        console.log(tuoteInfoValidator.errors);
+        res.status(400).json({ status: "puuttuvia tietoja"})
+    }
+}
+
+router.post('/uusi', tuoteInfoValidateMw, passport.authenticate('jwt', { session: false }), (req, res) => {
     var lisatty_tuote = [
-        req.body.nimi,
-        req.body.kuvaus,
-        req.body.kategoria,
-        req.body.hinta,
-        req.body.kuva,
+        req.body.Nimi,
+        req.body.Kuvaus,
+        req.body.Kategoria,
+        req.body.Hinta,
+        req.body.Kuva,
     ]
     var sqlKasky = 'INSERT INTO Tuote ( Nimi, Kuvaus, Kategoria, Hinta, Kuva, Valmistaja ) VALUES ?';
     var haeRavintola = 'SELECT idRavintola FROM Ravintola WHERE Omistaja = ?'

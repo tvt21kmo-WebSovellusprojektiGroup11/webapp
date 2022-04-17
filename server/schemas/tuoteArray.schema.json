@@ -1,0 +1,126 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://exampletuote.com/example.json",
+    "type": "array",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": [],
+    "examples": [
+        [
+            {
+                "idTuote": 1,
+                "Nimi": "testi tuote",
+                "Kuvaus": "testituotteen kuvaus",
+                "Kategoria": "p",
+                "Hinta": "7",
+                "Kuva": "https://dummyjson.com/products/1",
+                "Valmistaja": 1
+            }
+        ]
+    ],
+    "items": {
+        "$id": "#/items",
+        "anyOf": [
+            {
+                "$id": "#/items/anyOf/0",
+                "type": "object",
+                "title": "The first anyOf schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": {},
+                "examples": [
+                    {
+                        "idTuote": 1,
+                        "Nimi": "testi tuote",
+                        "Kuvaus": "testituotteen kuvaus",
+                        "Kategoria": "p",
+                        "Hinta": "7",
+                        "Kuva": "https://dummyjson.com/products/1",
+                        "Valmistaja": 1
+                    }
+                ],
+                "required": [
+                    "idTuote",
+                    "Nimi",
+                    "Kuvaus",
+                    "Kategoria",
+                    "Hinta",
+                    "Kuva",
+                    "Valmistaja"
+                ],
+                "properties": {
+                    "idTuote": {
+                        "$id": "#/items/anyOf/0/properties/idTuote",
+                        "type": "integer",
+                        "title": "The idTuote schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": 0,
+                        "examples": [
+                            1
+                        ]
+                    },
+                    "Nimi": {
+                        "$id": "#/items/anyOf/0/properties/Nimi",
+                        "type": "string",
+                        "title": "The Nimi schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "testi tuote"
+                        ]
+                    },
+                    "Kuvaus": {
+                        "$id": "#/items/anyOf/0/properties/Kuvaus",
+                        "type": "string",
+                        "title": "The Kuvaus schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "testituotteen kuvaus"
+                        ]
+                    },
+                    "Kategoria": {
+                        "$id": "#/items/anyOf/0/properties/Kategoria",
+                        "type": "string",
+                        "title": "The Kategoria schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "p"
+                        ]
+                    },
+                    "Hinta": {
+                        "$id": "#/items/anyOf/0/properties/Hinta",
+                        "type": "string",
+                        "title": "The Hinta schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "7"
+                        ]
+                    },
+                    "Kuva": {
+                        "$id": "#/items/anyOf/0/properties/Kuva",
+                        "type": "string",
+                        "title": "The Kuva schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "https://dummyjson.com/products/1"
+                        ]
+                    },
+                    "Valmistaja": {
+                        "$id": "#/items/anyOf/0/properties/Valmistaja",
+                        "type": "integer",
+                        "title": "The Valmistaja schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": 0,
+                        "examples": [
+                            1
+                        ]
+                    }
+                },
+                "additionalProperties": true
+            }
+        ]
+    }
+}
