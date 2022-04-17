@@ -8,12 +8,11 @@ const chaiJsonSchemaAjv = require('chai-json-schema-ajv');
 chai.use(chaiJsonSchemaAjv);
 
 const serverAddress = "http://localhost:3001";
-const ravintolaArrayInfoSchema = require('../schemas/ravintolaArray.schema.json');
+const tuoteArrayInfoSchema = require('../schemas/tuoteArray.schema.json');
 
 
 
-
-describe('Ravintola API test', function () {
+describe('Tuote API test', function () {
 
     before(function(){
         server.start();
@@ -23,26 +22,25 @@ describe('Ravintola API test', function () {
         server.close();
     });
 
-    describe('GET /ravintola', function() {
-        it('pitäisi palauttaa kaikki ravintolat', function(done) {
+    describe('GET /tuote', function() {
+        it('pitäisi palauttaa kaikki tuotteet', function(done) {
             //send http request
             chai.request(serverAddress)
-                .get('/ravintola')
+                .get('/tuote')
                 .end(function(err, res) {
                     expect(err).to.be.null;
                     // check response status
                     expect(res).to.have.status(200);
 
                     // check response data structure
-                    expect(res.body).to.be.jsonSchema(ravintolaArrayInfoSchema)
+                    expect(res.body).to.be.jsonSchema(tuoteArrayInfoSchema)
                     done();
                 })
         })
     })
+    describe('Uuden tuotteen lisäys', function() {
 
-    describe('Uuden ravintola datan lisäys', function() {
-
-        it('pitäisi hyväksyä uuden ravintolan lisäyksen kun login ja data on oikein', function(done) {
+        it('pitäisi hyväksyä uuden tuotteen lisäyksen kun login ja data on oikein', function(done) {
             chai.request(serverAddress)
                     .post('/login')
                     // send user login details
@@ -58,18 +56,14 @@ describe('Ravintola API test', function () {
                         //console.log(generatedJWT);  
 
             chai.request(serverAddress)
-                .post('/ravintola/uusi')
+                .post('/tuote/uusi')
                 .set({ "Authorization": `Bearer ${generatedJWT}` })
                 .send({
-                    Nimi: "TestiCaseRavintola",
-                    Osoite: "Testiravintola 123",
-                    Paikkakunta: "Oulu",
-                    Saldo: 77,
-                    Kuva: "https://public.keskofiles.com/f/recipe/napolilainenpizza_21?w=2400&fit=crop",
-                    Kuvaus: "TestiCaseRavintola",
-                    Aukioloaika: "MA-PE: 11:00-20:00, LA: 11:00-22:00, SU: SULJETTU",
-                    Hintataso: "eee",
-                    Tyyppi: "cd"
+                    Nimi: "test product",
+                    Kuvaus: "tst kuvaus ",
+                    Kategoria: "a",
+                    Hinta: 100,
+                    Kuva: "https://dummyjson.com/image/i/products/1/3.jpg"
                 })
                 .end(function(err, res) {
                     expect(err).to.be.null;
@@ -78,30 +72,25 @@ describe('Ravintola API test', function () {
                 })
             })
         })
-
-
-        it('pitäisi hylätä uuden ravintolan lisäyksen kun login data on väärin', function(done) {
-                chai.request(serverAddress)
-                    .post('/login')
-                    .auth('testCase123', 'testCase')
-                    .end((err, res) => {
-                        expect(res).to.have.status(401);     
-                        var generatedJWT = res.body.jwt;
-                        //console.log(generatedJWT);
-                            
+        
+        it('pitäisi hylätä uuden tuotteen lisäyksen kun login data on väärin', function(done) {
             chai.request(serverAddress)
-                .post('/ravintola/uusi')
+                .post('/login')
+                .auth('testCase123', 'testCase')
+                .end((err, res) => {
+                    expect(res).to.have.status(401);     
+                    var generatedJWT = res.body.jwt;
+                    //console.log(generatedJWT);
+                        
+            chai.request(serverAddress)
+                .post('/tuote/uusi')
                 .set({ "Authorization": `Bearer ${generatedJWT}` })
                 .send({
-                    Nimi: "TestiCaseRavintola",
-                    Osoite: "Testiravintola 123",
-                    Paikkakunta: "Oulu",
-                    Saldo: 77,
-                    Kuva: "https://public.keskofiles.com/f/recipe/napolilainenpizza_21?w=2400&fit=crop",
-                    Kuvaus: "TestiCaseRavintola",
-                    Aukioloaika: "MA-PE: 11:00-20:00, LA: 11:00-22:00, SU: SULJETTU",
-                    Hintataso: "eee",
-                    Tyyppi: "cd"
+                    Nimi: "test product",
+                    Kuvaus: "tst kuvaus ",
+                    Kategoria: "a",
+                    Hinta: 100,
+                    Kuva: "https://dummyjson.com/image/i/products/1/3.jpg"
                 })
                 .end(function(err, res) {
                     expect(err).to.be.null;
@@ -109,9 +98,9 @@ describe('Ravintola API test', function () {
                     done();
                     })
                 })   
-                })
-        
-        it('pitäisi hylätä uuden ravintolan lisäyksen kun datasta puuttuu kenttiä', function(done) {
+            })
+
+        it('pitäisi hylätä uuden tuotteen lisäyksen kun datasta puuttuu kenttiä', function(done) {
             chai.request(serverAddress)
                 .post('/login')
                 .auth('testCase', 'testCase')
@@ -121,18 +110,14 @@ describe('Ravintola API test', function () {
                     //console.log(generatedJWT);
                         
             chai.request(serverAddress)
-                .post('/ravintola/uusi')
+                .post('/tuote/uusi')
                 .set({ "Authorization": `Bearer ${generatedJWT}` })
                 .send({
-                    //Nimi: "TestiCaseRavintola",
-                    Osoite: "Testiravintola 123",
-                    Paikkakunta: "Oulu",
-                    Saldo: 77,
-                    Kuva: "https://public.keskofiles.com/f/recipe/napolilainenpizza_21?w=2400&fit=crop",
-                    Kuvaus: "TestiCaseRavintola",
-                    Aukioloaika: "MA-PE: 11:00-20:00, LA: 11:00-22:00, SU: SULJETTU",
-                    Hintataso: "eee",
-                    Tyyppi: "cd"
+                    //Nimi: "test product",
+                    Kuvaus: "tst kuvaus ",
+                    Kategoria: "a",
+                    Hinta: 100,
+                    Kuva: "https://dummyjson.com/image/i/products/1/3.jpg"
                 })
                 .end(function(err, res) {
                     expect(err).to.be.null;
@@ -141,8 +126,7 @@ describe('Ravintola API test', function () {
                     })
                 })   
                 })
-
-        it('pitäisi hylätä uuden ravintolan lisäyksen kun datassa vääriä tietotyyppejä', function(done) {
+        it('pitäisi hylätä uuden tuotteen lisäyksen kun datassa vääriä tietotyyppejä', function(done) {
             chai.request(serverAddress)
                 .post('/login')
                 .auth('testCase', 'testCase')
@@ -152,18 +136,14 @@ describe('Ravintola API test', function () {
                     //console.log(generatedJWT);
                         
             chai.request(serverAddress)
-                .post('/ravintola/uusi')
+                .post('/tuote/uusi')
                 .set({ "Authorization": `Bearer ${generatedJWT}` })
                 .send({
-                    Nimi: "TestiCaseRavintola",
-                    Osoite: "Testiravintola 123",
-                    Paikkakunta: null, //tässä väärä tietotyyppi
-                    Saldo: 77,
-                    Kuva: "https://public.keskofiles.com/f/recipe/napolilainenpizza_21?w=2400&fit=crop",
-                    Kuvaus: "TestiCaseRavintola",
-                    Aukioloaika: "MA-PE: 11:00-20:00, LA: 11:00-22:00, SU: SULJETTU",
-                    Hintataso: "eee",
-                    Tyyppi: "cd"
+                    Nimi: "test product",
+                    Kuvaus: "tst kuvaus ",
+                    Kategoria: 7, //väärä tietotyyppi
+                    Hinta: 100,
+                    Kuva: "https://dummyjson.com/image/i/products/1/3.jpg"
                 })
                 .end(function(err, res) {
                     expect(err).to.be.null;
@@ -172,8 +152,7 @@ describe('Ravintola API test', function () {
                     })
                 })   
                 })
-
-        it('pitäisi hylätä uuden ravintolan lisäyksen kun lähetetään tyhjä pyyntö', function(done) {
+        it('pitäisi hylätä uuden tuotteen lisäyksen kun lähetetään tyhjä pyyntö', function(done) {
             chai.request(serverAddress)
                 .post('/login')
                 // send user login details
@@ -184,7 +163,7 @@ describe('Ravintola API test', function () {
                     //console.log(generatedJWT);
                         
             chai.request(serverAddress)
-                .post('/ravintola/uusi')
+                .post('/tuote/uusi')
                 .set({ "Authorization": `Bearer ${generatedJWT}` })
                 .end(function(err, res) {
                     expect(err).to.be.null;
@@ -193,11 +172,10 @@ describe('Ravintola API test', function () {
                     })
                 })   
                 })
-
-        it('pitäisi löytyä lisätty ravintola', function(done) {
+        it('pitäisi löytyä lisätty tuote', function(done) {
             //send http request
             chai.request(serverAddress)
-            .get('/ravintola')
+            .get('/tuote')
             .end(function(err, res) {
                 expect(err).to.be.null;
                 // check response status
@@ -207,15 +185,11 @@ describe('Ravintola API test', function () {
                 let found = false;
                 
                 for(let i =0; i<res.body.length; i++){
-                    if((res.body[i].Nimi == "TestiCaseRavintola") && 
-                    (res.body[i].Osoite == "Testiravintola 123") &&
-                    (res.body[i].Paikkakunta == "Oulu") &&
-                    (res.body[i].Saldo == 77) &&
-                    (res.body[i].Kuva == "https://public.keskofiles.com/f/recipe/napolilainenpizza_21?w=2400&fit=crop") &&
-                    (res.body[i].Kuvaus == "TestiCaseRavintola") &&
-                    (res.body[i].Aukioloaika == "MA-PE: 11:00-20:00, LA: 11:00-22:00, SU: SULJETTU") &&
-                    (res.body[i].Hintataso == "eee") &&
-                    (res.body[i].Tyyppi == "cd")
+                    if((res.body[i].Nimi == "test product") && 
+                    (res.body[i].Kuvaus == "tst kuvaus ") &&
+                    (res.body[i].Kategoria == "a") &&
+                    (res.body[i].Hinta == "100") &&
+                    (res.body[i].Kuva == "https://dummyjson.com/image/i/products/1/3.jpg") 
                     ) {
                         found = true;
                         break;
@@ -226,8 +200,22 @@ describe('Ravintola API test', function () {
                 }
                 done();
             })
+            })
+        it('pitäisi palauttaa kaikki ravintolan tuotteet', function(done) {
+            //send http request
+            chai.request(serverAddress)
+                .get('/tuote/1')
+                .end(function(err, res) {
+                    expect(err).to.be.null;
+                    // check response status
+                    expect(res).to.have.status(200);
+
+                    // check response data structure
+                    expect(res.body).to.be.jsonSchema(tuoteArrayInfoSchema)
+                    done();
+                })
         })
-        it('pitäisi hylätä uuden ravintolan lisäyksen kun datassa vääriä kenttänimiä', function(done) {
+        it('pitäisi hylätä uuden tuotteen lisäyksen kun datassa vääriä kenttänimiä', function(done) {
             chai.request(serverAddress)
                 .post('/login')
                 .auth('testCase', 'testCase')
@@ -237,27 +225,21 @@ describe('Ravintola API test', function () {
                     //console.log(generatedJWT);
                         
             chai.request(serverAddress)
-                .post('/ravintola/uusi')
+                .post('/tuote/uusi')
                 .set({ "Authorization": `Bearer ${generatedJWT}` })
                 .send({
-                    Nimiii: "TestiCaseRavintola", //
-                    Osoitea: "Testiravintola 123", //
-                    Paikkakunta: "Oulu", 
-                    Saldo: 77,
-                    Kuva: "https://public.keskofiles.com/f/recipe/napolilainenpizza_21?w=2400&fit=crop",
-                    Kuvaus: "TestiCaseRavintola",
-                    Aukioloaika: "MA-PE: 11:00-20:00, LA: 11:00-22:00, SU: SULJETTU",
-                    Hintataso: "eee",
-                    Tyyppi: "cd"
+                    Nimiii: "test product", //
+                    Kuvaus: "tst kuvaus ",
+                    Kategoria: "a",
+                    Hintasdf: 100,  //
+                    Kuva: "https://dummyjson.com/image/i/products/1/3.jpg"
                 })
                 .end(function(err, res) {
                     expect(err).to.be.null;
                     expect(res).to.have.status(400);
                     done();
                     })
-            })   
-        })
-
-    })
+                })   
+                })
 })
-
+})

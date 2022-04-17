@@ -34,7 +34,7 @@ export default function UusiRavintola(props) {
   let ravintolaUiControls = null;
   switch (ravintolaProcessState) {
     case "idle":
-      ravintolaUiControls = <button type="submit">Luo käyttäjä</button>
+      ravintolaUiControls = <button type="submit">Luo ravintola</button>
       break;
 
     case "processing":
@@ -42,7 +42,7 @@ export default function UusiRavintola(props) {
       break;
 
     case "lisaysSuccess":
-      ravintolaUiControls = <span style={{ color: "green" }}>Käyttäjä luotu onnistuneesti</span>
+      ravintolaUiControls = <span style={{ color: "green" }}>Ravintola luotu onnistuneesti</span>
       break;
 
     case "lisaysFailure":

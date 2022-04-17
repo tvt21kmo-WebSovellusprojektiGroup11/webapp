@@ -2,8 +2,27 @@ const pool = require('../db_handler')();
 const express = require('express');
 const passport = require('passport');
 var router = express.Router();
+const Ajv = require("ajv")
+const ajv = new Ajv()
 
-router.post('/uusi', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+const tilausSchema= require('../schemas/tilaus.schema.json');
+const tilausInfoValidator = ajv.compile(tilausSchema);
+
+
+//middleware jolla tarkastetaan onko kaikissa kentissä arvot ennen lähetystä
+const tilausInfoValidateMw = function(req, res, next) {
+    const validationResult = tilausInfoValidator(req.body);
+
+    if(validationResult == true) {
+        next();
+    }else {
+        console.log(tilausInfoValidator.errors);
+        res.status(400).json({ status: "puuttuvia tietoja"})
+    }
+}
+
+router.post('/uusi', tilausInfoValidateMw, passport.authenticate('jwt', { session: false }), (req, res) => {
     // TODO: Jos jää aikaa tekee kuiteista kantaan muutoksia niin että ne toimii järkevästi
     // tällähetkellä jotta saadaan toimivatuote jätetään idKuitti tyhjäksi
     var lisaaUusiTilaus = 'INSERT INTO Tilaus ( Hinta, Toimitusaika ) VALUES ?';
